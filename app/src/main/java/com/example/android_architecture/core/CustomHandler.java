@@ -4,17 +4,17 @@ import android.os.Message;
 
 public class CustomHandler {
 
-    private CustomLooper dnLooper;
-    private CustomMessageQueue dnMessageQueue;
+    private CustomLooper mLooper;
+    private CustomMessageQueue mMessageQueue;
 
     public CustomHandler() {
-        dnLooper = CustomLooper.myLooper();
-        if (dnLooper == null) {
+        mLooper = CustomLooper.myLooper();
+        if (mLooper == null) {
             throw new RuntimeException(
                     "Can't create handler inside thread " + Thread.currentThread()
                             + " that has not called Looper.prepare()");
         }
-        dnMessageQueue = dnLooper.mQueue;
+        mMessageQueue = mLooper.mQueue;
     }
 
     public void handleMessage(CustomMessage msg) {
@@ -29,8 +29,8 @@ public class CustomHandler {
         //赋值当前消息
         message.target = this;
 
-        //使用dnMessageQueue，将消息传入
-        dnMessageQueue.enqueueMessage(message);
+        //使用mMessageQueue，将消息传入
+        mMessageQueue.enqueueMessage(message);
     }
 
     public void dispatchMessage(CustomMessage message) {
